@@ -35,12 +35,25 @@ def import_view(request):
         # Obtener el archivo CSV
         file = request.FILES["csv_file"]
 
+        if not file:
+            messages.error(request, "No has seleccionado ningún archivo CSV")
+            return redirect("import_data")
+
         # Lectura del CSV
         df = pd.read_csv(
             io.StringIO(file.read().decode("utf-8-sig")),
             sep=None,
             engine="python"
         )
+
+        # Límite de filas --> Solo se cargarán las primeras 2000 filas, ya que la versión free de la web no soporta más RAM
+        if len(df) > 2000:
+            df = df.head(2000)
+
+            messages.warning(
+                request,
+                f"Archivo subido correctamente. Se han procesado {len(df)} filas (limitado a 2000 por restricciones del sistema)."
+            )
 
         # Limpiar nombres de las columnas
         df.columns = df.columns.str.strip()
@@ -171,10 +184,10 @@ def reset_data(request):
 
         messages.success(request, "Datos eliminados correctamente")
 
-        # 🔥 IMPORTANTE: siempre redirigir después de POST
+        # Redirigir después de POST
         return redirect("import_data")
 
-    # Si alguien entra por GET, lo mandas a confirmación
+    # Si alguien entra por GET --> Se manda a confirmación
     return redirect("reset_import_confirm")
 
 
