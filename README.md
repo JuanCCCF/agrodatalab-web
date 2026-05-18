@@ -27,13 +27,13 @@ EnviroPro es una aplicación web desarrollada con Django para la gestión, anál
 
 ## Estructura del proyecto
 AgroDataLab_Web/
-├── dashboard/
-├── enviropro/
-├── alerts/
-├── imports/
-├── users/
-├── manage.py
-├── requirements.txt
+- dashboard/
+- enviropro/
+- alerts/
+- imports/
+- users/
+- manage.py
+- requirements.txt
 
 ## Instalación
 
