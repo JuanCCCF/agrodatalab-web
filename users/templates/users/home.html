@@ -1,0 +1,63 @@
+{% extends "base_auth.html" %}
+
+{% block content %}
+
+<!-- CONTENEDOR PRINCIPAL CENTRADO -->
+<div class="d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+
+    <div class="text-center" style="max-width: 900px;">
+
+        <!-- LOGO / TITULO -->
+        <div class="mb-4">
+            <h1 class="display-4 fw-bold text-success">
+                AgroDataLab
+            </h1>
+
+            <p class="text-white-50">
+                Sistema inteligente de monitorización agrícola
+            </p>
+        </div>
+
+        <!-- TARJETA CENTRAL -->
+        <div class="card bg-dark text-white border-0 shadow-lg p-4">
+
+            <h2 class="fw-bold mb-3">
+                Plataforma de análisis y alertas en tiempo real
+            </h2>
+
+            <p class="text-white-50 mb-3">
+                Proyecto desarrollado por <strong>Jesús y Juan</strong> en la asignatura de
+                <strong>Programación Orientada a Objetos en Python</strong> y
+                <strong>Análisis de Datos</strong>,
+                dentro del Curso de Especialización en Python del IES Trassierra.
+            </p>
+
+            <hr class="text-secondary">
+
+            <p class="text-white-50">
+                Gestiona sensores ambientales, detecta alertas automáticas y genera recomendaciones
+                inteligentes para la toma de decisiones agrícolas.
+            </p>
+
+        </div>
+
+        <!-- CTA BOTÓN -->
+        <div class="mt-4">
+
+            <a href="{% url 'login' %}"
+               class="btn btn-success btn-lg px-5 shadow">
+                Acceder al sistema
+            </a>
+
+        </div>
+
+        <!-- FOOTER MINI -->
+        <p class="text-white-50 small mt-4">
+            Monitorización · Alertas · Recomendaciones · Datos en tiempo real
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

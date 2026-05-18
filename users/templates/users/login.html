@@ -1,0 +1,61 @@
+{% extends "base_auth.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow p-4" style="width: 350px; border-radius: 12px;">
+
+        <h3 class="text-center mb-3">Iniciar sesión</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <input class="form-control mb-3" type="text" name="username" placeholder="Usuario" required>
+
+            <div class="input-group mb-3">
+                <input class="form-control"
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Contraseña"
+                    required>
+
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <img id="eyeIcon" src="/static/icons/eye.png" width="22">
+                </button>
+            </div>
+
+            <button class="btn btn-primary w-100">Entrar</button>
+        </form>
+
+        <hr>
+
+        <p class="text-center mb-0">
+            ¿No tienes cuenta?
+            <a href="{% url 'register' %}">Regístrate</a>
+        </p>
+
+    </div>
+</div>
+
+<script>
+const password = document.getElementById("password");
+const toggle = document.getElementById("togglePassword");
+const icon = document.getElementById("eyeIcon");
+
+const eye = "{% static 'icons/eye.png' %}";
+const notEye = "{% static 'icons/noteye.png' %}";
+
+toggle.addEventListener("click", function () {
+
+    const isHidden = password.type === "password";
+
+    password.type = isHidden ? "text" : "password";
+
+    icon.src = isHidden ? notEye : eye;
+});
+</script>
+
+{% endblock %}

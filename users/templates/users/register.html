@@ -1,0 +1,34 @@
+{% extends "base_auth.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 85vh;">
+
+    <div class="card shadow-lg p-4" style="width: 480px; border-radius: 14px;">
+
+        <h3 class="text-center mb-3">Crear cuenta</h3>
+        <p class="text-center text-muted mb-4">Regístrate para acceder al sistema</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form|crispy }}
+
+            <button class="btn btn-success w-100 mt-3">
+                Crear cuenta
+            </button>
+        </form>
+
+        <hr>
+
+        <p class="text-center mb-0">
+            ¿Ya tienes cuenta?
+            <a href="{% url 'login' %}">Inicia sesión</a>
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

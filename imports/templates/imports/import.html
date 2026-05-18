@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Importar datos EnviroPro</h2>
+
+    <div class="card p-4 mt-3">
+
+        {% if has_data %}
+        <div class="alert alert-warning">
+            Actualmente hay datos cargados en el sistema
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            No hay datos importados todavía
+        </div>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="file" name="csv_file" class="form-control mb-3">
+
+            <button class="btn btn-primary w-100">
+                Importar CSV
+            </button>
+        </form>
+
+        {% if has_data %}
+        <hr>
+
+        <a href="{% url 'reset_import_confirm' %}" class="btn btn-danger w-100 mt-2">
+            Borrar todos los datos
+        </a>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% for message in messages %}
+<script>
+toast("{{ message }}")
+</script>
+{% endfor %}
+
+{% endblock %}

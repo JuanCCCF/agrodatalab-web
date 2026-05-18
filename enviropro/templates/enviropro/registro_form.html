@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="card shadow border-0 col-md-6 mx-auto">
+
+<div class="card-header bg-primary text-white text-center">
+<h4>{{ titulo }}</h4>
+</div>
+
+<div class="card-body">
+
+<form method="post">
+{% csrf_token %}
+
+{{ form.as_p }}
+
+<div class="d-flex justify-content-between">
+<button class="btn btn-success">Guardar</button>
+<a href="{% url 'registros' %}" class="btn btn-secondary">
+Cancelar
+</a>
+</div>
+
+</form>
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

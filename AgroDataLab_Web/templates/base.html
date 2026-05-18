@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AgroDataLab Web</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        .card {
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+
+        <a class="navbar-brand" href="/dashboard/">
+            AgroDataLab
+        </a>
+
+        <div class="collapse navbar-collapse">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/">Dashboard</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/enviropro/">Registros</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/alerts/">Alertas</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/imports/">Importar datos</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/about/">Acerca del proyecto</a>
+                </li>
+
+            </ul>
+
+            {% if user.is_authenticated %}
+                <span class="text-white me-3">
+                    👤 {{ user.username }}
+                </span>
+
+                <a class="btn btn-outline-light" href="/logout/">
+                    Logout
+                </a>
+            {% endif %}
+
+        </div>
+    </div>
+</nav>
+
+<style>
+.bg-gradient-custom th {
+    background: linear-gradient(90deg,#0d6efd,#20c997) !important;
+    color: white !important;
+}
+</style>
+
+<div class="container mt-5">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

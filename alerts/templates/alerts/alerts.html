@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2 class="text-center fw-bold mb-4">
+Alertas del Sistema
+</h2>
+
+<div class="text-center mb-3">
+    <a href="{% url 'alert_create' %}" class="btn btn-success">
+        Nueva alerta
+    </a>
+</div>
+
+<!-- FILTRO VISUAL REAL (BOTONES) -->
+<div class="d-flex justify-content-center mb-4 gap-2 flex-wrap">
+
+    <a href="?tipo=humedad" class="btn btn-danger btn-sm">
+        Sequedad
+    </a>
+
+    <a href="?tipo=temperatura" class="btn btn-primary btn-sm">
+        Temperatura
+    </a>
+
+    <a href="?tipo=bateria" class="btn btn-warning btn-sm">
+        Energía
+    </a>
+
+    <a href="?" class="btn btn-secondary btn-sm">
+        Todas
+    </a>
+
+</div>
+
+<!-- GRID 5 POR FILA -->
+<div class="d-flex flex-wrap">
+
+{% if alerts %}
+
+    {% for alert in alerts %}
+
+    <div class="p-2" style="flex: 0 0 20%;">
+
+        <div class="card h-100 shadow-sm border-0">
+
+            <div class="card-header text-white text-center
+                {% if alert.variable_afectada == 'humedad' %}
+                    bg-danger
+                {% elif alert.variable_afectada == 'temperatura' %}
+                    bg-primary
+                {% elif alert.variable_afectada == 'bateria' %}
+                    bg-warning text-dark
+                {% else %}
+                    bg-secondary
+                {% endif %}
+            ">
+
+                <strong>{{ alert.tipo }}</strong><br>
+                <small>{{ alert.variable_afectada }}</small>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="small">{{ alert.descripcion }}</p>
+
+                <p class="text-muted small">
+                    {{ alert.fecha|date:"d/m/Y H:i" }}
+                </p>
+
+                <hr>
+
+                <h6 class="fw-bold">Recomendaciones</h6>
+
+                {% if alert.recomendaciones.all %}
+                    <ul class="list-group list-group-flush">
+                        {% for rec in alert.recomendaciones.all %}
+                            <li class="list-group-item">
+
+                                <strong>{{ rec.titulo }}</strong><br>
+
+                                <small class="text-muted">
+                                    {{ rec.descripcion }}
+                                </small>
+
+                                <div class="mt-1">
+                                    <span class="badge bg-dark">
+                                        {{ rec.prioridad }}
+                                    </span>
+
+                                    {% if rec.estado == "pendiente" %}
+                                        <span class="badge bg-warning text-dark">Pendiente</span>
+                                    {% elif rec.estado == "revisada" %}
+                                        <span class="badge bg-success">Revisada</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Descartada</span>
+                                    {% endif %}
+                                </div>
+
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted small">Sin recomendaciones</p>
+                {% endif %}
+
+                <hr>
+
+                <div class="d-flex justify-content-between">
+
+                    <a href="{% url 'alert_update' alert.id %}" class="btn btn-sm btn-outline-primary">
+                        Editar
+                    </a>
+
+                    <a href="{% url 'alert_delete' alert.id %}" class="btn btn-sm btn-outline-danger">
+                        Eliminar
+                    </a>
+
+                    {% for rec in alert.recomendaciones.all %}
+                        <a href="{% url 'reco_mark_reviewed' rec.id %}?next={{ request.get_full_path }}"
+                           class="btn btn-sm btn-outline-success">
+                            Revisada
+                        </a>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <div class="w-100 text-center p-5 text-white">
+        <h5>No hay alertas disponibles</h5>
+        <p>Cuando se generen alertas aparecerán aquí</p>
+    </div>
+
+{% endif %}
+
+</div>
+
+<!-- 📄 PAGINACIÓN REAL -->
+<div class="d-flex justify-content-center mt-4">
+
+<nav>
+<ul class="pagination">
+
+    {% if alerts.has_previous %}
+        <li class="page-item">
+            <a class="page-link"
+               href="?page={{ alerts.previous_page_number }}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}">
+                Anterior
+            </a>
+        </li>
+    {% endif %}
+
+    <li class="page-item active">
+        <span class="page-link">
+            {{ alerts.number }}
+        </span>
+    </li>
+
+    {% if alerts.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+               href="?page={{ alerts.next_page_number }}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}">
+                Siguiente
+            </a>
+        </li>
+    {% endif %}
+
+</ul>
+</nav>
+
+</div>
+
+</div>
+
+{% endblock %}

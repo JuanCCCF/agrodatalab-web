@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="row justify-content-center">
+
+<div class="col-md-5">
+
+<div class="card shadow border-0">
+
+<div class="card-header bg-danger text-white text-center">
+<h5 class="mb-0">Eliminar alerta</h5>
+</div>
+
+<div class="card-body text-center">
+
+<p class="mb-3">
+¿Seguro que deseas eliminar esta alerta?
+</p>
+
+<div class="alert alert-light border">
+<strong>{{ alert.tipo }}</strong><br>
+<small>{{ alert.descripcion }}</small>
+</div>
+
+<form method="post">
+{% csrf_token %}
+
+<button class="btn btn-danger">
+Eliminar
+</button>
+
+<a href="javascript:history.back()" class="btn btn-outline-secondary">
+Cancelar
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+{% endblock %}

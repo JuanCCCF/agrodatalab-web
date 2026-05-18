@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+<div class="card shadow border-0 col-md-5 mx-auto text-center">
+
+<div class="card-header bg-danger text-white">
+Eliminar Registro
+</div>
+
+<div class="card-body">
+
+<p>¿Eliminar registro del día?</p>
+
+<strong>{{ registro.fecha }}</strong>
+
+<form method="post">
+{% csrf_token %}
+
+<button class="btn btn-danger">Eliminar</button>
+<a href="{% url 'registros' %}" class="btn btn-secondary">
+Cancelar
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

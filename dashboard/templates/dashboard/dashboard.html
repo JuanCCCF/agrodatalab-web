@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="text-center fw-bold mb-4">
+        Dashboard EnviroPro
+    </h2>
+
+    <!-- KPIs -->
+    <div class="row g-3">
+
+        <div class="col">
+            <div class="card bg-primary text-white text-center p-3 shadow">
+                <h6>Total registros</h6>
+                <h2>{{ total_registros }}</h2>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-success text-white text-center p-3 shadow">
+                <h6>Humedad media</h6>
+                <h2>{{ humedad_media|floatformat:2 }}</h2>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-warning text-dark text-center p-3 shadow">
+                <h6>Temperatura media</h6>
+                <h2>{{ temperatura_media|floatformat:2 }}</h2>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-danger text-white text-center p-3 shadow">
+                <h6>Batería media</h6>
+                <h2>{{ bateria_media|floatformat:2 }}</h2>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card bg-dark text-white text-center p-3 shadow">
+                <h6>Panel solar medio</h6>
+                <h2>{{ panel_media|floatformat:2 }}</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Fechas -->
+    <div class="card mt-4 p-4 shadow">
+        <h5>Fechas</h5>
+        <p><strong>Primera lectura:</strong> {{ primera_lectura }}</p>
+        <p><strong>Última lectura:</strong> {{ ultima_lectura }}</p>
+    </div>
+
+    <!-- Alertas -->
+    <div class="card mt-3 p-4 shadow">
+        <h5>Alertas</h5>
+
+        <span class="badge bg-danger">Sequedad: {{ alertas_sequedad }}</span>
+        <span class="badge bg-warning text-dark">Energía: {{ alertas_energia }}</span>
+        <span class="badge bg-info text-dark">Temperatura: {{ alertas_temp }}</span>
+    </div>
+
+    <!-- Recomendación -->
+    <div class="card mt-3 p-4 shadow">
+        <h5>Última recomendación</h5>
+
+        {% if ultima_recomendacion %}
+            <div class="alert alert-success">
+                <strong>{{ ultima_recomendacion.titulo }}</strong><br>
+                {{ ultima_recomendacion.descripcion }}
+            </div>
+        {% else %}
+            <p>No hay recomendaciones aún</p>
+        {% endif %}
+    </div>
+
+    <!-- GRÁFICAS -->
+    <!--<div class="card mt-4 p-4 shadow">-->
+        <!-- GRÁFICAS -->
+    <div class="card mt-4 p-4 shadow-sm bg-white">
+
+        <h5 class="mb-4">Evolución de datos</h5>
+
+        <!-- HUMEDAD -->
+        <div class="mb-4">
+            <h6>Humedad</h6>
+
+            {% if humedad_json != "[]" %}
+                <div class="bg-white p-2 border rounded">
+                    <canvas id="chartHumedad"></canvas>
+                </div>
+            {% else %}
+                <div class="text-center text-muted p-4 border rounded bg-light">
+                    No hay datos de humedad disponibles
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- TEMPERATURA -->
+        <div class="mb-4">
+            <h6>Temperatura</h6>
+
+            {% if temp_json != "[]" %}
+                <div class="bg-white p-2 border rounded">
+                    <canvas id="chartTemp"></canvas>
+                </div>
+            {% else %}
+                <div class="text-center text-muted p-4 border rounded bg-light">
+                    No hay datos de temperatura disponibles
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- BATERÍA -->
+        <div class="mb-2">
+            <h6>Batería</h6>
+
+            {% if bateria_json != "[]" %}
+                <div class="bg-white p-2 border rounded">
+                    <canvas id="chartBateria"></canvas>
+                </div>
+            {% else %}
+                <div class="text-center text-muted p-4 border rounded bg-light">
+                    No hay datos de batería disponibles
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const labels = JSON.parse('{{ fechas_json|escapejs }}');
+    const humedad = JSON.parse('{{ humedad_json|escapejs }}');
+    const temp = JSON.parse('{{ temp_json|escapejs }}');
+    const bateria = JSON.parse('{{ bateria_json|escapejs }}');
+
+    new Chart(document.getElementById('chartHumedad'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Humedad',
+                data: humedad,
+                borderColor: 'blue',
+                fill: false
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('chartTemp'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Temperatura',
+                data: temp,
+                borderColor: 'red',
+                fill: false
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('chartBateria'), {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Batería',
+                data: bateria,
+                borderColor: 'green',
+                fill: false
+            }]
+        }
+    });
+</script>
+
+{% endblock %}
