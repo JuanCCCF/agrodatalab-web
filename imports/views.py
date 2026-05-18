@@ -46,13 +46,13 @@ def import_view(request):
             engine="python"
         )
 
-        # Límite de filas --> Solo se cargarán las primeras 2000 filas, ya que la versión free de la web no soporta más RAM
-        if len(df) > 2000:
-            df = df.head(2000)
+        # Límite de filas --> Solo se cargarán las primeras 1000 filas, ya que la versión free de la web no soporta más RAM
+        if len(df) > 1000:
+            df = df.head(1000)
 
             messages.warning(
                 request,
-                f"Archivo subido correctamente. Se han procesado {len(df)} filas (limitado a 2000 por restricciones del sistema)."
+                f"Archivo subido correctamente. Se han procesado {len(df)} filas (limitado a 1000 por restricciones del sistema)."
             )
 
         # Limpiar nombres de las columnas

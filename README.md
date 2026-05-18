@@ -64,12 +64,12 @@ python manage.py runserver
 ```
 
 ## Notas
-- Límite de 2000 filas por importación (restricción de memoria en hosting gratuito)
+- Límite de 1000 filas por importación (restricción de memoria en hosting gratuito)
 - Optimizado para Render Free Tier
 
 ## Autores
-Jesús Ruiz Borruecos
-Juan Ruiz Pérez
+- Jesús Ruiz Borruecos
+- Juan Ruiz Pérez
 
 **Curso:** Curso de Especialización en Desarrollo de aplicaciones en lenguaje Python
 **Centro:** IES Trassierra (Córdoba)
