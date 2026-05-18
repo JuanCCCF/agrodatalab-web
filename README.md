@@ -1,7 +1,7 @@
 # AgroDataLab Web
 
-Web: https://agrodatalab-web.onrender.com/
-Enlace vídeo (Youtube): https://youtu.be/OabzghwdXr0
+- Web: https://agrodatalab-web.onrender.com/
+- Enlace vídeo (Youtube): https://youtu.be/OabzghwdXr0
 
 ## Descripción
 
